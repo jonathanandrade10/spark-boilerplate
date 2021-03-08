@@ -1,0 +1,12 @@
+System.setProperty("java.security.krb5.conf", "/local_folder/krb_file.conf")
+
+// Create spark session
+val session = SparkSession
+  .builder()
+  .appName("YourAppName")
+  .getOrCreate()
+
+conf.set("dfs.namenode.kerberos.principal.pattern", "hdfs/*@YOURKERB.RELM")
+conf.set("hadoop.security.authentication", "KERBEROS")
+UserGroupInformation.setConfiguration(conf)
+UserGroupInformation.loginUserFromKeytab("kerbuser@YOURKERB.RELM", "/local_folder/krb_keytab.keytab")
